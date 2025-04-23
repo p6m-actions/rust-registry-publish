@@ -81,6 +81,28 @@ jobs:
           registry: my-custom-registry
 ```
 
+### Publishing to a private registry
+
+```yaml
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Login to private registry
+        uses: p6m-actions/rust-registry-login@v1
+        with:
+          registry-url: https://my-private-registry.example.com/
+          registry-name: my-private-registry
+          token: ${{ secrets.REGISTRY_TOKEN }}
+      
+      - name: Publish to private registry
+        uses: p6m-actions/rust-registry-publish@v1
+        with:
+          registry: my-private-registry
+```
+
 ### Dry run before actual publishing
 
 ```yaml
