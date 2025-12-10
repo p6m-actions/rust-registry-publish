@@ -66,7 +66,7 @@ runs:
           CMD="$CMD --skip ${{ inputs.ignore_crates }}"
         fi
 
-        if [[ "${{ inputs.registry }}" != "crates.io" ]]; then
+        if [[ -n "${{ inputs.registry }}" && "${{ inputs.registry }}" != "crates.io" ]]; then
           CMD="$CMD --registry ${{ inputs.registry }}"
         fi
 
@@ -90,8 +90,10 @@ runs:
           CMD="$CMD --all-features"
         fi
 
-        # Don't create any tags or commits as requested
-        CMD="$CMD --no-git-commit --no-git-push --no-git-tag"
+        # Don't create any git commits, tags, or pushes
+        # Using only --no-git-commit as it implies no git operations will occur
+        # (--no-git-push and --no-git-tag conflict with --no-git-commit)
+        CMD="$CMD --no-git-commit"
 
         echo "Executing: $CMD"
         $CMD
