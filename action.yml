@@ -90,6 +90,9 @@ runs:
           CMD="$CMD --all-features"
         fi
 
+        # Skip interactive confirmation prompts (required for CI)
+        CMD="$CMD --yes"
+
         # Don't create any git commits, tags, or pushes
         # Using only --no-git-commit as it implies no git operations will occur
         # (--no-git-push and --no-git-tag conflict with --no-git-commit)
